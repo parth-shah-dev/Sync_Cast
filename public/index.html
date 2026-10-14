@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#10131a" />
+  <title>SyncScreen — watch together</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">▶</span><span>SyncScreen</span><span class="tag">MVP</span></div>
+    <div class="status"><span id="statusDot" class="dot"></span><span id="statusText">Not connected</span></div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">TWO COMPUTERS · ONE PLAYBACK CLOCK</div>
+      <h1>Watch together.<br><span>No movie stream.</span></h1>
+      <p>Your movie plays locally on each computer. The internet carries only sync commands and, when needed, the movie file itself.</p>
+    </section>
+
+    <section class="connection card">
+      <div class="section-heading"><div><div class="eyebrow">01 / CONNECT</div><h2>Create a private room</h2></div><span class="pill">2 people max</span></div>
+      <div class="room-row">
+        <label class="field grow"><span>Room code</span><input id="roomCode" maxlength="32" value="GUJ-MH-2026" autocomplete="off" /></label>
+        <button id="connectBtn" class="primary">Connect</button>
+        <button id="disconnectBtn" class="secondary" disabled>Disconnect</button>
+      </div>
+      <p class="hint">Both people enter the same room code. Use a unique code that you share privately.</p>
+      <div class="connection-detail"><span id="peerDot" class="dot muted"></span><span id="peerStatus">Waiting for the other person</span><span class="spacer"></span><span id="transportLabel">WebRTC not ready</span></div>
+    </section>
+
+    <section class="player-layout">
+      <div class="card player-card">
+        <div class="section-heading"><div><div class="eyebrow">02 / LOCAL PLAYER</div><h2>Your movie</h2></div><span id="fileState" class="pill">No file selected</span></div>
+        <div class="video-wrap">
+          <video id="video" controls playsinline></video>
+          <div id="videoPlaceholder" class="video-placeholder"><div class="play-icon">▶</div><strong>Your local screen</strong><span>Choose a video file below to begin.</span></div>
+        </div>
+        <div class="file-row">
+          <label class="secondary file-button">Choose movie<input id="fileInput" type="file" accept="video/*,.mkv,.avi,.mov,.mp4,.webm" /></label>
+          <button id="sendFileBtn" class="primary" disabled>Transfer to friend</button>
+        </div>
+        <div id="fileInfo" class="file-info">Choose a video file. If your friend doesn't have the same file, SyncScreen can transfer it over the peer connection.</div>
+        <div class="progress-wrap hidden" id="progressWrap"><div class="progress-label"><span id="progressLabel">Preparing transfer…</span><span id="progressPct">0%</span></div><div class="progress-track"><div id="progressBar"></div></div></div>
+        <div class="controls-row">
+          <button id="syncBtn" class="secondary" disabled>Sync playback now</button>
+          <label class="toggle"><input id="autoSync" type="checkbox" checked /><span>Auto-correct drift</span></label>
+        </div>
+      </div>
+      <aside class="card side-card">
+        <div class="eyebrow">03 / SESSION</div><h2>Playback status</h2>
+        <div class="stat"><span>Connection</span><strong id="connectionStat">Offline</strong></div>
+        <div class="stat"><span>Playback</span><strong id="playbackStat">Stopped</strong></div>
+        <div class="stat"><span>Position</span><strong id="positionStat">00:00</strong></div>
+        <div class="stat"><span>File verification</span><strong id="hashStat">Not checked</strong></div>
+        <div class="stat"><span>Network mode</span><strong id="networkStat">Not connected</strong></div>
+        <div class="notice"><strong>Heads-up</strong><p>Direct peer-to-peer connections depend on both networks. This MVP uses public STUN servers; restrictive networks may need a TURN relay to connect reliably.</p></div>
+        <div class="notice"><strong>File formats</strong><p>Playback support depends on your browser. MP4 with H.264/AAC is the safest starting format. Some MKV/AVI files may transfer but not play in Chrome.</p></div>
+      </aside>
+    </section>
+
+    <section class="card activity-card">
+      <div class="section-heading"><div><div class="eyebrow">04 / ACTIVITY</div><h2>Session log</h2></div><button id="clearLogBtn" class="text-button">Clear</button></div>
+      <div id="log" class="log" aria-live="polite"></div>
+    </section>
+    <footer>SyncScreen MVP · Media stays local during playback · Room codes are not authentication</footer>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

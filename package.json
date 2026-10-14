@@ -1,0 +1,13 @@
+{
+  "name": "syncscreen-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Peer-to-peer synchronized local movie player MVP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
